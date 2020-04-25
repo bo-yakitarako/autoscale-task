@@ -7,32 +7,32 @@ import App from './components/App';
 window.Pusher = require('pusher-js');
 
 declare global {
-    interface Window {
-        Echo: Echo;
-    }
+	interface Window {
+		Echo: Echo;
+	}
 }
 
 window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    encrypted: true,
+	broadcaster: 'pusher',
+	key: process.env.MIX_PUSHER_APP_KEY,
+	cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+	encrypted: true,
 });
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById('root'),
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('root'),
 );
 
 // interface Data {
-//     message: {
-//         id: number;
-//         content: string;
-//     }
+// 	message: {
+// 		id: number;
+// 		content: string;
+// 	}
 // }
 
 // window.Echo.channel('message-received-channel').listen('MessageReceived', (data: Data) => {
-//     console.log(data.message.content);
+// 	console.log(data.message.content);
 // });
