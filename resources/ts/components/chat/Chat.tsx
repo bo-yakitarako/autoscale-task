@@ -3,7 +3,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core';
 import { AppState } from '../../module';
 import Message from './Message';
 import InputField from './InputField';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
