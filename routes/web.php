@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Events\MessageReceived;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +16,16 @@ use App\Events\MessageReceived;
 */
 
 Route::get('/', function () {
-    return view('index');
+	return view('index');
 });
+Route::post('/member/add', 'MemberController@add');
+Route::delete('/member/delete', 'MemberController@remove');
+Route::post('/message/post', 'MessageController@post');
 
-Route::get('/event', function () {
-    $message = ['id' => 2, 'content' => 'ぶり'];
-    event(new MessageReceived($message));
+Route::get('/init', function () {
+	$memberController = new MemberController();
+	$messageController = new MessageController();
+	$members = $memberController->fetchAll();
+	$messages = $messageController->fetchAll();
+	return response()->json(['members' => $members, 'messages' => $messages], 200, [], JSON_UNESCAPED_UNICODE);
 });

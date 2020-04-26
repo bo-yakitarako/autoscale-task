@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 	root: {
 		display: 'flex',
 		flexDirection: 'row',
+		marginTop: theme.spacing(1),
 	},
 	meFlex: {
 		display: 'flex',
@@ -122,7 +123,7 @@ const Message: React.SFC<IMessageProps> = (props: IMessageProps) => {
 				<div className={props.me ? classes.meFlex : ''}>
 					<div className={clsx(classes.contentBox, props.me ? classes.meContent : '')}>
 						<Typography className={clsx(classes.content, props.me ? classes.meContent : '')}>
-							{content.split('\n').map((text, index) => <Fragment key={text + index}>{text}<br /></Fragment>)}
+							{content.split('<br>').map((text, index) => <Fragment key={text + index}>{text}<br /></Fragment>)}
 						</Typography>
 					</div>
 				</div>

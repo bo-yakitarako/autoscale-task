@@ -1,18 +1,28 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles, createStyles, Theme, Avatar, Typography, Divider } from '@material-ui/core';
 import clsx from 'clsx';
+import { AppState } from '../module';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
 	root: {
-		width: 320 - theme.spacing(2),
+		width: 250,
 		minHeight: '100vh',
 		maxHeight: '100vh',
 		overflowX: 'hidden',
 		overflowY: 'scroll',
-		borderLeftStyle: 'solid',
-		borderLeftWidth: 2,
-		borderLeftColor: theme.palette.grey[300],
-		marginLeft: theme.spacing(2),
+		backgroundColor: 'white',
+		scrollbarWidth: 'none',
+		msOverflowStyle: 'none',
+		'&::-webkit-scrollbar': {
+			display: 'none',
+		},
+		[theme.breakpoints.up('md')]: {
+			width: 320 - theme.spacing(2),
+			borderLeftStyle: 'solid',
+			borderLeftWidth: 2,
+			borderLeftColor: theme.palette.grey[300],
+		},
 	},
 	memberBox: {
 		width: 320 - theme.spacing(3),
@@ -57,8 +67,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 
-const MemberList = () => {
+const MemberList: React.SFC<{ className?: string }> = (props: { className?: string }) => {
 	const classes = useStyles();
+	const { userName, members: users } = useSelector((state: AppState) => state);
 	const Member: React.SFC<{ name: string, me?: boolean }> = (props: { name: string, me?: boolean }) => {
 		return (
 			<div className={classes.memberBox}>
@@ -70,11 +81,12 @@ const MemberList = () => {
 		);
 	};
 	return (
-		<div className={classes.root}>
-			<Member name="私" me />
+		<div className={clsx(classes.root, props.className ? props.className : '')}>
+			<Member name={userName} me />
 			<Divider className={classes.divider} />
-			<Member name="誰か" />
-			<Member name="どなたか" />
+			{users.filter(user => user !== userName).map((user, index) => (
+				<Member key={user + index} name={user} />
+			))}
 		</div>
 	);
 };
