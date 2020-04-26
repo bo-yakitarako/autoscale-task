@@ -6,6 +6,7 @@ LINEのようなチャット画面と入室中のユーザーが見えるよう�
 TypeScript、React、Redux、Material-UI<br>
 スタイリングにはMaterial-UIのReact Hooksを用いたCSS in JSを用いました。<br>
 Reduxではtoolkitを用いてaction、reducer、storeを``module.ts``の1つにまとめています。
+フロントエンドのソースは``resources/ts``内にあります。
 
 ### バックエンド
 PHP、Laravel、MySQL<br>
