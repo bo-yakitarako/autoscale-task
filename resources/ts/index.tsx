@@ -25,14 +25,3 @@ ReactDOM.render(
 	</Provider>,
 	document.getElementById('root'),
 );
-
-// interface Data {
-// 	message: {
-// 		id: number;
-// 		content: string;
-// 	}
-// }
-
-// window.Echo.channel('message-received-channel').listen('MessageReceived', (data: Data) => {
-// 	console.log(data.message.content);
-// });

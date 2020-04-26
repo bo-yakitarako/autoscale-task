@@ -18,7 +18,7 @@ interface IAppState {
 
 const initialState: IAppState = {
 	nameRequirement: true,
-	userName: 'アホ',
+	userName: '',
 	inputFieldHeight: 64,
 	lookingAtLatest: true,
 	newPost: false,
