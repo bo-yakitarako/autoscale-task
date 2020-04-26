@@ -55,7 +55,7 @@ class MemberController extends Controller
 	{
 		$currentTime = new DateTime();
 		$currentTime->setTimezone(new DateTimeZone('Asia/Tokyo'));
-		$currentTime->modify('-3 hours');
+		$currentTime->modify('-30 minutes');
 		Member::where('updated_at', '<', $currentTime->format('Y-m-d H:i:s'))->delete();
 	}
 }
