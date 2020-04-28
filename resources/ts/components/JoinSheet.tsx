@@ -50,9 +50,9 @@ const JoinSheet = () => {
 		if (status === 200) {
 			dispatch(module.actions.setUserName(name));
 			dispatch(module.actions.openChat());
-			setTimeout(() => {
-				location.reload();
-			}, 10800000);
+			setInterval(() => {
+				post('/member/update', '', 'PATCH');
+			}, 30000);
 		} else {
 			setErrorMessage(response === 'empty' ? '名前が空欄です。' :
 				response === 'exist' ? '名前が被っています。' :
@@ -61,15 +61,15 @@ const JoinSheet = () => {
 	};
 	const submit = () => {
 		if (0 < name.length && name.length <= 256) {
-			post('/member/add', 'userName=' + name, false, submitCallback);
+			post('/member/add', 'userName=' + name, '', submitCallback);
 		} else if (0 < name.length) {
 			setErrorMessage('名前が長すぎます。');
 			inputName('');
 		}
 	};
-	window.onunload = window.onbeforeunload = () => {
+	window.onbeforeunload = () => {
 		if (userName.length > 0) {
-			post('/member/delete', 'userName=' + userName, true);
+			post('/member/delete', 'userName=' + userName, 'DELETE');
 		}
 	};
 	return (

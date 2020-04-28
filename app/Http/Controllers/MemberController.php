@@ -14,7 +14,6 @@ class MemberController extends Controller
 	public function add(Request $req)
 	{
 		try {
-			$this->removeOldMembers();
 			if (Member::where('userName', $req->userName)->count() > 0) {
 				return response('exist', 403);
 			} else {
@@ -51,11 +50,15 @@ class MemberController extends Controller
 		return $members;
 	}
 
-	private function removeOldMembers()
+	public function removeOldMembers()
 	{
+		$remainedCount = Member::all()->count();
 		$currentTime = new DateTime();
 		$currentTime->setTimezone(new DateTimeZone('Asia/Tokyo'));
-		$currentTime->modify('-30 minutes');
+		$currentTime->modify('-15 minutes');
 		Member::where('updated_at', '<', $currentTime->format('Y-m-d H:i:s'))->delete();
+		if (Member::all()->count() < $remainedCount) {
+			event(new MemberUpdated($this->fetchAll()));
+		}
 	}
 }

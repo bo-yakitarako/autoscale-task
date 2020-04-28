@@ -54,7 +54,7 @@ const Chat = () => {
             <div
                 id="main_chat"
                 className={classes.mainChat}
-                style={{ maxHeight: `calc(100vh - ${inputFieldHeight + 8}px)` }}
+                style={{ maxHeight: `calc(100vh - ${inputFieldHeight + 16}px)` }}
                 onScroll={(event) => {
                     const chatDOM = event.currentTarget;
                     const lookingAtLatest = chatDOM.scrollHeight - chatDOM.scrollTop - 120 < chatDOM.clientHeight;
@@ -62,7 +62,7 @@ const Chat = () => {
                 }}
             >
                 {messages.map((message, index) => (
-                    <Message key={index} message={message} me={userName === message.user} />
+                    <Message key={index} message={message} me={userName === message.userName} />
                 ))}
             </div>
             <InputField />

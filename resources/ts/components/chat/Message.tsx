@@ -111,14 +111,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 const Message: React.SFC<IMessageProps> = (props: IMessageProps) => {
-	const { user, postTime, content } = props.message;
+	const { userName, postTime, content } = props.message;
 	const classes = useStyles();
 	return (
 		<div className={clsx(classes.root, props.me ? classes.meFlex : '')}>
-			<Avatar className={clsx(classes.icon, props.me ? classes.invisible : '')}>{user[0]}</Avatar>
+			<Avatar className={clsx(classes.icon, props.me ? classes.invisible : '')}>{userName[0]}</Avatar>
 			<div className={classes.info}>
 				<div className={clsx(classes.userBox, props.me ? classes.invisible : '')}>
-					<Typography className={classes.userInfo}>{user}</Typography>
+					<Typography className={classes.userInfo}>{userName}</Typography>
 				</div>
 				<div className={props.me ? classes.meFlex : ''}>
 					<div className={clsx(classes.contentBox, props.me ? classes.meContent : '')}>

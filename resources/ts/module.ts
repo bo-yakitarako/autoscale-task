@@ -1,7 +1,7 @@
 import { createSlice, configureStore, getDefaultMiddleware, PayloadAction } from '@reduxjs/toolkit';
 
 export interface IMessage {
-	user: string;
+	userName: string;
 	postTime: string;
 	content: string;
 }
@@ -12,6 +12,7 @@ interface IAppState {
 	inputFieldHeight: number;
 	lookingAtLatest: boolean;
 	newPost: boolean;
+	userInput: string;
 	messages: IMessage[];
 	members: string[];
 }
@@ -22,13 +23,14 @@ const initialState: IAppState = {
 	inputFieldHeight: 64,
 	lookingAtLatest: true,
 	newPost: false,
+	userInput: '',
 	messages: [],
 	members: [],
 };
 
 const csrfToken = (document.getElementsByName('csrf-token').item(0) as HTMLMetaElement).content;
 
-export const post = (path: string, body: string, isDelete?: boolean, callback?: Function) => {
+export const post = (path: string, body: string, method = '', callback?: Function) => {
 	const xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = () => {
 		if (xhr.readyState === 4 && callback) {
@@ -38,7 +40,7 @@ export const post = (path: string, body: string, isDelete?: boolean, callback?: 
 	xhr.open('POST', path, true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.setRequestHeader('X-CSRF-Token', csrfToken);
-	xhr.send(body + (isDelete ? '&_method=DELETE' : ''));
+	xhr.send(body + (method !== '' ? '&_method=' + method : ''));
 };
 
 const module = createSlice({
@@ -63,6 +65,9 @@ const module = createSlice({
 		toggleNewPost: (state, action: PayloadAction<boolean>) => {
 			state.newPost = action.payload;
 		},
+		inputMessage: (state, action: PayloadAction<string>) => {
+			state.userInput = action.payload;
+		},
 		updateMessages: (state, action: PayloadAction<IMessage[]>) => {
 			state.messages = action.payload;
 			if (!state.lookingAtLatest) {
@@ -70,11 +75,21 @@ const module = createSlice({
 			}
 		},
 		updateMembers: (state, action: PayloadAction<string[]>) => {
+			if (!action.payload.includes(state.userName) && state.userName !== '') {
+				location.reload();
+				return;
+			}
 			state.members = action.payload;
 		},
-		submitMessage: (state, action: PayloadAction<string>) => {
-			post('/message/post', `userName=${state.userName}&content=${action.payload}`);
-			state.inputFieldHeight = 64;
+		submitMessage: (state) => {
+			if (state.userInput !== '') {
+				post('/message/post', `userName=${state.userName}&content=${state.userInput}`);
+				state.inputFieldHeight = 64;
+				const mainChatDOM = document.querySelector('#main_chat') as HTMLDivElement;
+				mainChatDOM.scrollTop = mainChatDOM.scrollHeight;
+				state.newPost = false;
+				state.userInput = '';
+			}
 		},
 	},
 });

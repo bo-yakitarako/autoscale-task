@@ -14,7 +14,7 @@ class MessageController extends Controller
 		$messages = [];
 		foreach ($messageObject as $value) {
 			$messages[] = [
-				'user' => $value['userName'],
+				'userName' => $value['userName'],
 				'postTime' => str_replace('-', '/', $value['created_at']),
 				'content' => $value['content'],
 			];
@@ -31,7 +31,7 @@ class MessageController extends Controller
 			'content' => str_replace(PHP_EOL, '<br>', $req->content),
 		];
 		Message::create($message);
-		Member::where('userName', $req->userName)->update(['userName' => $req->userName]);
+		Member::where('userName', $req->userName)->update([]);
 		event(new MessageReceived($this->fetchAll()));
 	}
 }

@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const MemberList: React.SFC<{ className?: string }> = (props: { className?: string }) => {
 	const classes = useStyles();
-	const { userName, members: users } = useSelector((state: AppState) => state);
+	const { userName, members } = useSelector((state: AppState) => state);
 	const Member: React.SFC<{ name: string, me?: boolean }> = (props: { name: string, me?: boolean }) => {
 		return (
 			<div className={classes.memberBox}>
@@ -84,8 +84,8 @@ const MemberList: React.SFC<{ className?: string }> = (props: { className?: stri
 		<div className={clsx(classes.root, props.className ? props.className : '')}>
 			<Member name={userName} me />
 			<Divider className={classes.divider} />
-			{users.filter(user => user !== userName).map((user, index) => (
-				<Member key={user + index} name={user} />
+			{members.filter(memberName => memberName !== userName).map((memberName, index) => (
+				<Member key={memberName + index} name={memberName} />
 			))}
 		</div>
 	);

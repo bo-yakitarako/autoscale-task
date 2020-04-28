@@ -20,6 +20,7 @@ Route::get('/', function () {
 });
 Route::post('/member/add', 'MemberController@add');
 Route::delete('/member/delete', 'MemberController@remove');
+Route::patch('/member/update', 'MemberController@removeOldMembers');
 Route::post('/message/post', 'MessageController@post');
 
 Route::get('/init', function () {
