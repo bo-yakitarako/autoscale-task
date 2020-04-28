@@ -27,6 +27,7 @@ WebSocketではPusherを用いてブロードキャストしています。
 - デプロイ(0.5時間)
 - 微調整(1時間)
 - リファクタリング(0.5時間)
+- 修正(2時間)
 
 ## 参考
 - [これさえ読めばLaravel Broadcastingの基本が理解できる+Vue.js](https://reffect.co.jp/laravel/laravel-broadcasting-understandig)
